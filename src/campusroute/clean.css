@@ -1,0 +1,100 @@
+/* CampusRoute keeps the 3D map renderer and removes unrelated cockpit chrome while keeping
+   the Cesium renderer and provider attribution visible. The boot class is also
+   applied before the application starts, preventing a first-paint flash. */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #071018;
+}
+
+#cesiumContainer {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important;
+}
+
+/* Hide the legacy presentation immediately, before asynchronous startup. */
+#scope-mask,
+#world-overlay-root,
+#title-bar,
+#style-indicator,
+#top-center-actions,
+#global-loading-status,
+#traffic-sync-chip,
+#cctv-sync-chip,
+#safe-frame-overlay,
+#intel-hud,
+#left-panel-stack,
+#right-context-rail,
+#command-dock,
+#key-setup-chip,
+#key-setup,
+#first-run-launcher,
+#toast,
+.cesium-viewer-toolbar,
+.cesium-viewer-animationContainer,
+.cesium-viewer-timelineContainer,
+.cesium-viewer-fullscreenContainer,
+.cesium-viewer-geocoderContainer,
+#pp-toggles {
+  display: none !important;
+}
+
+#loading-screen {
+  z-index: 2500 !important;
+  background: radial-gradient(circle at center, #0b202b 0%, #071018 38%, #050a0f 100%) !important;
+}
+
+#loading-screen .loader-content {
+  width: min(320px, calc(100vw - 40px));
+  text-align: center;
+}
+
+#loading-screen .campusroute-loader-mark {
+  width: 104px;
+  height: 104px;
+  max-width: 104px;
+  max-height: 104px;
+  margin: 0 auto 18px;
+  border-radius: 28px;
+  display: block;
+  object-fit: contain;
+  border: 1px solid rgba(86,255,224,.35);
+  background: #fff;
+  box-shadow: 0 0 34px rgba(86,255,224,.12);
+  animation: campusroute-loader-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes campusroute-loader-pulse {
+  0%, 100% { transform: scale(.98); opacity: .72; }
+  50% { transform: scale(1.03); opacity: 1; }
+}
+
+#loading-screen .campusroute-loader-title {
+  margin: 0;
+  color: #eefefe;
+  font: 800 22px/1.1 Inter, sans-serif;
+  letter-spacing: -.4px;
+}
+
+#loading-screen .campusroute-loader-title span { color: #56ffe0; }
+
+#loading-screen .loader-status {
+  margin-top: 10px;
+  color: #88a8b0;
+  font: 600 10px/1.5 JetBrains Mono, monospace;
+  letter-spacing: 1px;
+}
+
+#cesium-credits,
+.cesium-widget-credits {
+  z-index: 1400 !important;
+  font-size: 10px !important;
+  opacity: .8;
+}
